@@ -49,3 +49,15 @@ Easily start your REST Web Services
 - [Swagger UI](https://swagger.io/tools/swagger-ui/)'s https://petstore.swagger.io/ is useful to see OpenAPI definitions on your browser.
   - example 1: https://raw.githubusercontent.com/y-leisures/openapi-yaml/master/openapi-definition/openapi.yaml
   - example 2: https://raw.githubusercontent.com/apache/iceberg/main/open-api/rest-catalog-open-api.yaml
+
+- `@Operation` annotation's `hidden` attribute supports hiding operations from OpenAPI definition.
+  - example:
+
+    ```java
+    @GET
+    @Path("/hidden")
+    @Operation(hidden = true)
+    public String hiddenOperation() {
+        return "This operation is hidden from OpenAPI definition.";
+    }
+    ```
