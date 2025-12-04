@@ -1,6 +1,7 @@
 package org.bms.core;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -100,7 +101,7 @@ public interface TeamAndPlayerEndpointResourceIf {
             ),
             @APIResponse(responseCode = "500", description = "Internal server error")
     })
-    Response getTeamById(@PathParam("id") Integer teamId);
+    Response getTeamById(@PathParam("id") @Positive Integer teamId);
 
     @GET
     @Path("/teams/{id}/players")

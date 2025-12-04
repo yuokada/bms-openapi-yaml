@@ -2,6 +2,9 @@
 openapi: 3.1.0
 components:
   schemas:
+    DemoException:
+      description: A demo exception for testing purposes
+      type: object
     LocalDateTime:
       type: string
       format: date-time
@@ -263,6 +266,7 @@ paths:
         schema:
           type: integer
           format: int32
+          exclusiveMinimum: 0
       responses:
         "200":
           description: The detail of a team
@@ -600,6 +604,7 @@ paths:
         schema:
           type: integer
           format: int32
+          exclusiveMinimum: 0
       responses:
         "200":
           description: The detail of a team
@@ -694,3 +699,44 @@ paths:
         "500":
           description: Internal server error
       summary: Get Players By Team Id
+  /dummy/api/v1/internal/roles:
+    get:
+      parameters:
+      - schema:
+          type: number
+          minimum: 0
+          default: 50
+        name: limit
+        in: query
+      - schema:
+          type: number
+          minimum: 0
+        name: offset
+        in: query
+      responses:
+        "200":
+          description: OK
+      summary: Get Roles
+      tags:
+      - Internal Endpoint Resource If Impl
+  /dummy/api/v1/internal/teams-excep/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: User found
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DemoException"
+      summary: Get Team By Id With Excep
+      tags:
+      - Internal Endpoint Resource If Impl

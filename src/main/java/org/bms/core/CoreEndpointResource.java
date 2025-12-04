@@ -2,6 +2,7 @@ package org.bms.core;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 import org.bms.annotation.BmsBasic;
 
@@ -27,7 +28,7 @@ public class CoreEndpointResource implements TeamAndPlayerEndpointResourceIf {
     }
 
     @Override
-    public Response getTeamById(Integer teamId) {
+    public Response getTeamById(Integer teamId){
         return null;
     }
 }
