@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.Set;
+import org.jboss.logging.Logger;
 
 import static org.bms.BmsConstants.MOCK_BMS_BASIC_API;
 import static org.bms.BmsConstants.MOCK_BMS_COMMON_APIS_FOR_AUTHENTICATED_USERS;
@@ -20,8 +21,19 @@ import static org.bms.BmsConstants.MOCK_BMS_COMMON_APIS_FOR_AUTHENTICATED_USERS;
 @Path("/dummy/api/v1/core")
 @Tag(name = MOCK_BMS_BASIC_API, description = MOCK_BMS_COMMON_APIS_FOR_AUTHENTICATED_USERS)
 public class MockEndpointResource implements TeamAndPlayerEndpointResourceIf, StadiumEndpointResourceIf {
+
+    private final Logger logger = Logger.getLogger(MockEndpointResource.class);
+
     @Override
     public Response getPlayers(int offset, int limit, Set<Integer> teamIds) {
+        if (teamIds.isEmpty()) {
+            teamIds = MockDataGenerator.generateTeams(10).stream()
+                    .map(TeamResponse::id)
+                    .collect(java.util.stream.Collectors.toSet());
+        }
+        logger.info("getPlayers called");
+        logger.info("team IDs: " + String.join(", ", teamIds.stream().map(String::valueOf).toArray(String[]::new)));
+
         List<PlayerResponse> players = MockDataGenerator.generatePlayers(teamIds, limit);
         return Response.ok(players).build();
     }
